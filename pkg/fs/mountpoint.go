@@ -10,9 +10,11 @@ import (
 )
 
 const (
+	// ProcMount represents the /proc/mounts file
 	ProcMount = "/proc/mounts"
 )
 
+// Mount defines the attribute of mount.
 type Mount struct {
 	Device     string
 	MountPoint string
@@ -22,7 +24,7 @@ type Mount struct {
 	Pass       string // fsck options, set 0 or 1 or 2, 0 will not check, 1 earlier than 2 to check.
 }
 
-// return mountpoint, fs type, error
+// GetMountPoint returns the mount point information of file system
 func GetMountPoint(file string) (*Mount, error) {
 	var (
 		mountpoint string

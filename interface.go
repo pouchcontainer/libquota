@@ -2,6 +2,7 @@ package libquota
 
 import "github.com/pouchcontainer/libquota/types"
 
+// Quota defines the interface of different disk quota
 type Quota interface {
 	SetQuota(file string, id uint64, quota *types.QuotaLimit) error
 
