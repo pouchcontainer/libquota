@@ -1,9 +1,11 @@
 package libquota
 
-type Quota interface {
-	SetQuota(file string, id uint64, quota *QuotaLimit) error
+import "github.com/pouchcontainer/libquota/types"
 
-	GetQuota(file string) (*QuotaLimit, error)
+type Quota interface {
+	SetQuota(file string, id uint64, quota *types.QuotaLimit) error
+
+	GetQuota(file string) (*types.QuotaLimit, error)
 
 	GetQuotaID(file string) (uint64, error)
 }

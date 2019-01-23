@@ -1,16 +1,6 @@
-package libquota
+package types
 
 import "sync"
-
-type QuotaType string
-
-const (
-	Ext4GrpQuota QuotaType = "ext4_grpquota"
-
-	Ext4PrjQuota QuotaType = "ext4_prjquota"
-
-	XfsPrjQuota QuotaType = "xfs_prjquota"
-)
 
 type FSType string
 

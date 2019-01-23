@@ -9,6 +9,12 @@
 			"revisionTime": "2018-08-30T19:11:22Z"
 		},
 		{
+			"checksumSHA1": "r6ZMyP/HsdeToXIxvgP3ntL6Bds=",
+			"path": "github.com/konsorten/go-windows-terminal-sequences",
+			"revision": "5c8c8bd35d3832f5d134ae1e1e375b69a4d25242",
+			"revisionTime": "2018-10-04T22:41:46Z"
+		},
+		{
 			"checksumSHA1": "0H/VjT8w1CB702qWpbYMqr65Mf0=",
 			"path": "github.com/pkg/errors",
 			"revision": "ffb6e22f01932bf7ac35e0bad9be11f01d1c8685",
@@ -21,16 +27,40 @@
 			"revisionTime": "2018-12-26T10:54:42Z"
 		},
 		{
+			"checksumSHA1": "Irn4Vk2RYWN9SisfALiqbWFbwrU=",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "659e47340eafb203ad3c2ce461023fde46356615",
+			"revisionTime": "2019-01-17T12:59:11Z"
+		},
+		{
 			"checksumSHA1": "qTNfPVU4Tz/JDMcSeL+k9HX2cV8=",
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "363ebb24d041ccea8068222281c2e963e997b9dc",
 			"revisionTime": "2019-01-09T08:30:14Z"
 		},
 		{
+			"checksumSHA1": "KRlS8eQZGK1oYVCOkIvcMDXabxk=",
+			"path": "github.com/urfave/cli",
+			"revision": "b67dcf995b6a7b7f14fad5fcb7cc5441b05e814b",
+			"revisionTime": "2018-10-29T21:32:00Z"
+		},
+		{
+			"checksumSHA1": "BSPDVKviqHQaG2phOFN690zAKB8=",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": "64072686203f69e3fd20143576b27200f18ab0fa",
+			"revisionTime": "2019-01-22T01:17:21Z"
+		},
+		{
 			"checksumSHA1": "k92yD4WX8hB+IH3nuFma4OVoLSY=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "11f53e03133963fb11ae0588e08b5e0b85be8be5",
 			"revisionTime": "2019-01-16T09:16:37Z"
+		},
+		{
+			"checksumSHA1": "Y7nctMxT58lRM78VtElPerhcnEs=",
+			"path": "golang.org/x/sys/windows",
+			"revision": "054c452bb702e465e95ce8e7a3d9a6cf0cd1188d",
+			"revisionTime": "2019-01-21T16:41:33Z"
 		}
 	],
 	"rootPath": "github.com/pouchcontainer/libquota"
