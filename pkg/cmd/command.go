@@ -8,12 +8,14 @@ import (
 	"time"
 )
 
+// CommandResult defines the execute command's result
 type CommandResult struct {
 	ExitCode int
 	Stdout   string
 	Stderr   string
 }
 
+// Run is used to execute command with timeout
 func Run(timeout int, bin string, args ...string) (*CommandResult, error) {
 	var (
 		err      error

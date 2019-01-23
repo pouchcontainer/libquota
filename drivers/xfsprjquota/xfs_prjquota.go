@@ -12,14 +12,18 @@ import (
 )
 
 const (
+	// XfsQuota represents the xfs_quota tool
 	XfsQuota = "xfs_quota"
 )
 
-type xfsPrjQuota struct {
+// XfsPrjQuota defines the xfs project quota struct
+type XfsPrjQuota struct {
 	types.BaseQuota
 }
 
-func New(file string) (*xfsPrjQuota, error) {
+// New is used to check whether support to use xfs project quota,
+// and returns the xfs project quota object.
+func New(file string) (*XfsPrjQuota, error) {
 	// check xfs_quota tool and its version
 	res, err := cmd.Run(0, "xfs_quota", "-V")
 	if err != nil {
@@ -48,14 +52,15 @@ func New(file string) (*xfsPrjQuota, error) {
 		}
 	}
 
-	return &xfsPrjQuota{
+	return &XfsPrjQuota{
 		BaseQuota: types.BaseQuota{
 			IDMap: make(map[uint64]*types.QuotaLimit),
 		},
 	}, nil
 }
 
-func (q *xfsPrjQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) error {
+// SetQuota is used to set the file's xfs project quota with quota id.
+func (q *XfsPrjQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) error {
 	// get mountpoint
 	mount, err := fs.GetMountPoint(file)
 	if err != nil {
@@ -91,12 +96,14 @@ func (q *xfsPrjQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) 
 	return nil
 }
 
-func (q *xfsPrjQuota) GetQuota(file string) (*types.QuotaLimit, error) {
+// GetQuota returns the file's xfs project quota information
+func (q *XfsPrjQuota) GetQuota(file string) (*types.QuotaLimit, error) {
 	// TODO: Not implemented
 	return nil, nil
 }
 
-func (q *xfsPrjQuota) GetQuotaID(file string) (uint64, error) {
+// GetQuotaID returns the file's xfs project quota id.
+func (q *XfsPrjQuota) GetQuotaID(file string) (uint64, error) {
 	// TODO: Not implemented
 	// xfsctl(path, fd, XFS_IOC_FSGETXATTR, &fsx)
 	return 0, nil

@@ -2,23 +2,29 @@ package ext4grpquota
 
 import "github.com/pouchcontainer/libquota/types"
 
-type ext4GrpQuota struct {
+// Ext4GrpQuota defines the ext4 group quota struct
+type Ext4GrpQuota struct {
 	types.BaseQuota
 }
 
-func New(file string) (*ext4GrpQuota, error) {
+// New is used to check whether support to use ext4 group quota,
+// and returns the ext4 group quota object.
+func New(file string) (*Ext4GrpQuota, error) {
 	// TODO: validate fs info
-	return &ext4GrpQuota{}, nil
+	return &Ext4GrpQuota{}, nil
 }
 
-func (q *ext4GrpQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) error {
+// SetQuota is used to set the file's ext4 group quota with quota id.
+func (q *Ext4GrpQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) error {
 	return nil
 }
 
-func (q *ext4GrpQuota) GetQuota(file string) (*types.QuotaLimit, error) {
+// GetQuota returns the file's ext4 group quota information
+func (q *Ext4GrpQuota) GetQuota(file string) (*types.QuotaLimit, error) {
 	return nil, nil
 }
 
-func (q *ext4GrpQuota) GetQuotaID(file string) (uint64, error) {
+// GetQuotaID returns the file's ext4 group quota id.
+func (q *Ext4GrpQuota) GetQuotaID(file string) (uint64, error) {
 	return 0, nil
 }

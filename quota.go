@@ -11,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// NewQuota returns the quota object.
 func NewQuota(file string) (Quota, error) {
 	var quota Quota
 
@@ -25,6 +26,9 @@ func NewQuota(file string) (Quota, error) {
 	}
 
 	kernelVersion, err := kernel.GetKernelVersion()
+	if err != nil {
+		return nil, err
+	}
 
 	switch types.FSType(mount.FSType) {
 	case types.Ext4:
