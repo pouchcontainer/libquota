@@ -17,7 +17,7 @@ func NewQuota(file string) (Quota, error) {
 
 	mount, err := fs.GetMountPoint(file)
 	if err != nil {
-		return nil, errors.Errorf("failed to get (%s) file system information", file)
+		return nil, errors.Wrapf(err, "failed to get file(%s) system information", file)
 	}
 
 	quota = QuotaMapGet(mount.MountPoint)

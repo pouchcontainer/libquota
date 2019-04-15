@@ -1,12 +1,19 @@
 package cmd
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os/exec"
+	"strings"
 	"syscall"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
+
+// DefaultTimeOut represents the default timeout of running command.
+const DefaultTimeOut = 3600
 
 // CommandResult defines the execute command's result
 type CommandResult struct {
@@ -18,9 +25,15 @@ type CommandResult struct {
 // Run is used to execute command with timeout
 func Run(timeout int, bin string, args ...string) (*CommandResult, error) {
 	var (
-		err      error
-		exitCode int
+		err       error
+		exitCode  int
+		stdoutBuf bytes.Buffer
+		stderrBuf bytes.Buffer
 	)
+
+	if timeout <= 0 {
+		timeout = DefaultTimeOut
+	}
 	cmd := exec.Command(bin, args...)
 
 	stdoutPipe, err := cmd.StdoutPipe()
@@ -41,6 +54,12 @@ func Run(timeout int, bin string, args ...string) (*CommandResult, error) {
 
 	done := make(chan error)
 	go func() {
+		if _, err := bufio.NewReader(stdoutPipe).WriteTo(&stdoutBuf); err != nil {
+			done <- err
+		}
+		if _, err := bufio.NewReader(stderrPipe).WriteTo(&stderrBuf); err != nil {
+			done <- err
+		}
 		done <- cmd.Wait()
 	}()
 
@@ -56,18 +75,12 @@ func Run(timeout int, bin string, args ...string) (*CommandResult, error) {
 		}
 	}
 
-	stdout, err := ioutil.ReadAll(stdoutPipe)
-	if err != nil {
-		return nil, err
-	}
-
-	stderr, err := ioutil.ReadAll(stderrPipe)
-	if err != nil {
-		return nil, err
-	}
+	logrus.Debugf("success to run [ %s %s ], result [%s %s]",
+		bin, strings.Join(args, " "), stdoutBuf.String(), stderrBuf.String())
 
 	return &CommandResult{
-		Stdout:   string(stdout),
-		Stderr:   string(stderr),
-		ExitCode: exitCode}, nil
+		Stdout:   stdoutBuf.String(),
+		Stderr:   stderrBuf.String(),
+		ExitCode: exitCode,
+	}, nil
 }

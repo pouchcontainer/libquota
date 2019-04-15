@@ -2,6 +2,7 @@ package fs
 
 import (
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/pouchcontainer/libquota/pkg/cmd"
@@ -44,7 +45,7 @@ func GetMountPoint(file string) (*Mount, error) {
 	// Filesystem     1K-blocks  Used Available Use% Mounted on
 	// /dev/sdb        41922560 32940  41889620   1% /mnt/data
 	lines := strings.Split(res.Stdout, "\n")
-	if len(lines) != 2 {
+	if len(lines) != 3 {
 		return nil, errors.Errorf("failed to use df to get mountpoint, "+
 			"invalid output(%s)", res.Stdout)
 	}
@@ -66,13 +67,21 @@ func GetMountPoint(file string) (*Mount, error) {
 		if len(parts) != 6 {
 			continue
 		}
+
+		// check device is exist or not.
+		if _, err := os.Stat(parts[0]); err != nil {
+			continue
+		}
+
 		if parts[1] == mountpoint {
-			mount.Device = parts[0]
-			mount.MountPoint = parts[1]
-			mount.FSType = parts[2]
-			mount.Opts = parts[3]
-			mount.Dump = parts[4]
-			mount.Pass = parts[5]
+			mount = &Mount{
+				Device:     parts[0],
+				MountPoint: parts[1],
+				FSType:     parts[2],
+				Opts:       parts[3],
+				Dump:       parts[4],
+				Pass:       parts[5],
+			}
 			break
 		}
 	}

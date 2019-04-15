@@ -54,19 +54,15 @@ func New(file string) (*XfsPrjQuota, error) {
 
 	return &XfsPrjQuota{
 		BaseQuota: types.BaseQuota{
-			IDMap: make(map[uint64]*types.QuotaLimit),
+			Mount:  mount,
+			IDNext: types.BaseQuotaID,
+			IDMap:  make(map[uint64]*types.QuotaLimit),
 		},
 	}, nil
 }
 
 // SetQuota is used to set the file's xfs project quota with quota id.
 func (q *XfsPrjQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) error {
-	// get mountpoint
-	mount, err := fs.GetMountPoint(file)
-	if err != nil {
-		return errors.Wrapf(err, "failed to get file(%s) mountpoint", file)
-	}
-
 	// set quota id
 	setID := fmt.Sprintf("project -s -p %s %d", file, id)
 
@@ -83,7 +79,7 @@ func (q *XfsPrjQuota) SetQuota(file string, id uint64, quota *types.QuotaLimit) 
 	setLimit := fmt.Sprintf("limit -p bhard=%dm bsoft=%dm ihard=%d isoft=%d %d %s",
 		quota.BlockHardLimit, quota.BlockSoftLimit,
 		quota.InodeHardLimit, quota.InodeSoftLimit,
-		id, mount.MountPoint)
+		id, q.Mount.MountPoint)
 	ret, err = cmd.Run(0, XfsQuota, "-xc", setLimit)
 	if err != nil {
 		return errors.Wrapf(err, "failed to run (%s -xc %s)", XfsQuota, setLimit)
@@ -104,7 +100,5 @@ func (q *XfsPrjQuota) GetQuota(file string) (*types.QuotaLimit, error) {
 
 // GetQuotaID returns the file's xfs project quota id.
 func (q *XfsPrjQuota) GetQuotaID(file string) (uint64, error) {
-	// TODO: Not implemented
-	// xfsctl(path, fd, XFS_IOC_FSGETXATTR, &fsx)
 	return 0, nil
 }
