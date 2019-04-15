@@ -117,8 +117,8 @@ func setquota(context *cli.Context) error {
 			"set one of 'bhard' or 'bsoft' or 'ihard' or 'isoft'")
 	}
 	limit := &types.QuotaLimit{
-		BlockHardLimit: bhard,
-		BlockSoftLimit: bsoft,
+		BlockHardLimit: bhard * 1024 * 1024,
+		BlockSoftLimit: bsoft * 1024 * 1024,
 		InodeHardLimit: ihard,
 		InodeSoftLimit: isoft,
 	}
@@ -126,6 +126,13 @@ func setquota(context *cli.Context) error {
 	quota, err := libquota.NewQuota(file)
 	if err != nil {
 		return err
+	}
+
+	if id == 0 {
+		id, err = quota.GetQuotaID(file)
+		if err != nil {
+			return err
+		}
 	}
 
 	return quota.SetQuota(file, id, limit)

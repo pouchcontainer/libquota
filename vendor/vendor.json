@@ -9,6 +9,12 @@
 			"revisionTime": "2018-08-30T19:11:22Z"
 		},
 		{
+			"checksumSHA1": "MlaWEe1K+Kpb9wDF88qPoqO1uro=",
+			"path": "github.com/gofrs/flock",
+			"revision": "5135e617513b1e6e205a3a89b042249dee6730c8",
+			"revisionTime": "2019-03-20T16:07:11Z"
+		},
+		{
 			"checksumSHA1": "r6ZMyP/HsdeToXIxvgP3ntL6Bds=",
 			"path": "github.com/konsorten/go-windows-terminal-sequences",
 			"revision": "5c8c8bd35d3832f5d134ae1e1e375b69a4d25242",
